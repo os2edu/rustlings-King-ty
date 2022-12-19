@@ -27,14 +27,22 @@ pub enum Command {
 }
 
 mod my_module {
+    use std::fmt::format;
+
     use super::Command;
 
     // TODO: Complete the function signature!
-    pub fn transformer(input: ???) -> ??? {
+    pub fn transformer(input: Vec<(String, Command)>) -> Vec<String> {
         // TODO: Complete the output declaration!
-        let mut output: ??? = vec![];
+        let mut output: Vec<String> = vec![];
         for (string, command) in input.iter() {
             // TODO: Complete the function body. You can do it!
+            let new_string = match command {
+                Command::Append(n) => format!("{}{}", string, "bar".repeat(*n)),
+                Command::Trim => string.trim().to_string(),
+                Command::Uppercase => string.to_uppercase(),
+            };
+            output.push(new_string);
         }
         output
     }
@@ -43,8 +51,9 @@ mod my_module {
 #[cfg(test)]
 mod tests {
     // TODO: What do we have to import to have `transformer` in scope?
-    use ???;
     use super::Command;
+    use my_module::transformer;
+    // use super::my_module::transformer; // 2种写法都可以
 
     #[test]
     fn it_works() {
